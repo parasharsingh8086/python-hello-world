@@ -37,11 +37,20 @@ components:
       deployment/memoryRequest: 50Mi
       deployment/container-port: 8081
     kubernetes:
-      uri: deploy.yaml
-      endpoints:
-      - name: http-8081
-        targetPort: 8081
-        path: /
+      inlined:
+        apiVersion: batch/v1
+        kind: Job
+        metadata:
+          name: pi
+        spec:
+          template:
+            spec:
+              containers:
+              - name: job
+                image: python-image:latest
+                command: ["some",  "command"]
+              restartPolicy: Never
+
 commands:
   - id: build-image
     apply:
