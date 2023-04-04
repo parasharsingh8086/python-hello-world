@@ -28,36 +28,12 @@ components:
         uri: docker/Dockerfile
         buildContext: .
         rootRequired: false
-  - name: kubernetes-deploy
-    attributes:
-      deployment/replicas: 1
-      deployment/cpuLimit: '100m'
-      deployment/cpuRequest: 10m
-      deployment/memoryLimit: 100Mi
-      deployment/memoryRequest: 50Mi
-      deployment/container-port: 8081
-    kubernetes:
-      inlined:
-        apiVersion: batch/v1
-        kind: Job
-        metadata:
-          name: pi
-        spec:
-          template:
-            spec:
-              containers:
-              - name: job
-                image: python-image:latest
-                command: ["some",  "command"]
-              restartPolicy: Never
 
 commands:
   - id: build-image
     apply:
       component: image-build
-  - id: deployk8s
-    apply:
-      component: kubernetes-deploy
+
   - id: deploy
     composite:
       commands:
