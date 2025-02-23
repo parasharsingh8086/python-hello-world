@@ -1,4 +1,0 @@
-- id: che-incubator/che-idea/latest
-  override:
-    preferences:
-      python.globalModuleInstallation: true
